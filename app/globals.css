@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@keyframes wave-slide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@layer utilities {
+  .animate-wave-slide {
+    animation: wave-slide 0.25s linear infinite;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+}
+.highlight-slide {
+  background-image: linear-gradient(90deg, rgba(88, 53, 94, 0.75) 0%, rgba(88, 53, 94, 0.75) 100%);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: left;
+  transition: background-size 0.3s ease-out;
+}
+
+.highlight-slide:hover {
+  background-size: 100% 100%;
+}
