@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, Transition, Variants } from "framer-motion";
 import AnimatedWaves from "@/components/AnimatedWaves";
 import DynamicWaves from "@/components/DynamicWaves";
 import WarpWordTailwind from "@/components/WarpedWord";
@@ -19,18 +19,25 @@ export default function SplashGate() {
     return () => clearTimeout(t);
   }, []);
 
-  const heroVariants = {
-    hidden: prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 40 },
-    visible: prefersReducedMotion
+  const EASE = [0.22, 0.1, 0.25, 1] as const;
+  const makeHeroVariants = (reduced: boolean): Variants => ({
+    hidden: reduced ? { opacity: 0 } : { opacity: 0, y: 40 },
+    visible: reduced
       ? { opacity: 1 }
       : {
           opacity: 1,
           y: 0,
-          transition: { duration: 0.8, ease: [0.22, 0.1, 0.25, 1], delay: 0.2 },
+          transition: { type: "tween", duration: 0.8, ease: EASE, delay: 0.2 },
         },
-  };
+    });
 
-  const nameTransition = { duration: 0.75, ease: [0.22, 0.1, 0.25, 1] };
+  const heroVariants =  makeHeroVariants(!!prefersReducedMotion);
+
+  const nameTransition: Transition = {
+        type: "tween",
+        duration: 0.75,
+        ease: EASE,
+        };
 
   return (
     <>
@@ -156,7 +163,7 @@ export default function SplashGate() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 16 }}
-              transition={{ duration: 0.35, ease: [0.22, 0.1, 0.25, 1] }}
+              transition={{ type: "tween", duration: 0.35, ease: EASE }}
               className="max-w-5xl"
             >
               <motion.p
