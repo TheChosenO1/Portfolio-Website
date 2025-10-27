@@ -28,7 +28,7 @@ export default function MorphingWaves() {
           transition={{
             duration: 4,
             ease: "easeInOut",
-            repeat: Infinity,
+            repeat: prefersReducedMotion ? 0 : Infinity,
             repeatType: "mirror", // yoyo
           }}
         />
@@ -40,7 +40,7 @@ export default function MorphingWaves() {
           style={{ opacity: 0.95 }}
           initial={false}
           animate={{
-            d: prefersReducedMotion ? ORANGE_FRAMES.slice(0, 1) : ORANGE_FRAMES,
+            d: prefersReducedMotion ? ORANGE_FRAMES[0] : ORANGE_FRAMES,
           }}
           transition={{
             duration: 7, // slightly different to avoid perfect sync
